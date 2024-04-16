@@ -32,8 +32,18 @@ The Client Updater App is a simple GUI application built with Tkinter in Python.
 - The client application must be hosted at a specific URL for the update functionality to work properly.
 - Adjust the URLs in the code to match your server configurations.
 
+
+
+
+![EOServLauncher](https://github.com/HelloByeLetsNot/EOServLauncher/blob/main/eolauncher.png)
+
+
+
 ## How to edit and distribute as exe
 To create an executable (exe) file from your Python script, you can use `pyinstaller`. Here's a step-by-step guide on how to do it:
+
+
+
 
 ### 1. Install `pyinstaller`
 
