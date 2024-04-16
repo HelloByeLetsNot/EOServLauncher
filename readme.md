@@ -1,6 +1,6 @@
-# Client Updater App
+# EoServ Client Launcher
 
-The Client Updater App is a simple GUI application built with Tkinter in Python. It allows users to update and launch a client application, while also providing news updates fetched from a remote server.
+The EoServ Client Launcher is a Client Updater and Luancher with a news feature. It is a simple GUI application built with Tkinter in Python. It allows users to update and launch a client application, while also providing news updates fetched from a remote server.
 
 ## Features
 
