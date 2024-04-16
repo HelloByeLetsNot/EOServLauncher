@@ -1,49 +1,23 @@
-# Game Launcher
+# EoServ Client Launcher
 
-The Game Launcher is a simple GUI application built with Tkinter in Python. It allows users to update and launch a game application, while also providing news updates fetched from a remote server.
+The EoServ Client Launcher is a Client Updater and Luancher with a news feature. It is a simple GUI application built with Tkinter in Python. It allows users to update and launch a client application, while also providing news updates fetched from a remote server.
 
 ## Features
 
-- Background Image: The launcher displays a background image fetched from a URL.
-- Update Button: Clicking this button triggers the download and update process for the game application.
-- Launch Button: Clicking this button launches the game application if it exists.
-- News Display: The launcher fetches news data from a remote server and displays it in a text box. Users can click on links within the text to visit corresponding web pages.
+- Background Image: The app displays a background image fetched from a URL.
+- Update Button: Clicking this button triggers the download and update process for the client application.
+- Launch Button: Clicking this button launches the client application if it exists.
+- Progress Bar: Shows the progress of the download and update process.
+- News Display: The app fetches news data from a remote server and displays it in a text box. Users can click on links within the text to visit corresponding web pages.
 
 ## Usage
 
-1. **Clone the Repository**: Clone this repository to your local machine.
-
-2. **Install Dependencies**: Install the required dependencies by running `pip install -r requirements.txt`.
-
-3. **Edit Configuration**: Edit the `config.json` file to customize the launcher settings:
-    - `"background_image_url"`: URL of the background image.
-    - `"download_url"`: URL of the game update zip file.
-    - `"news_json_path"`: Path to the news JSON file.
-    - `"launcher_exe_name"`: Name of the game launcher executable.
-    - `"discord_link"`: Link to join the Discord server.
-    - `"website_link"`: Link to the game's website.
-    - `"icon_path"`: Path to the icon file for the launcher window.
-
-4. **Host News JSON**: Host the `news.json` file on a web server. Update the `"news_json_path"` in the `config.json` file with the appropriate URL.
-
-5. **Run the Application**: Run the application by executing `python launcher.py`.
-
-6. **Launcher Operation**:
-    - Click the "Update Game" button to download and update the game application.
-    - Once updated, click the "Launch Game" button to start the game application.
-    - News updates are displayed in the text box. Click on links to visit relevant web pages.
-
-## Hosting News JSON
-
-To host the `news.json` file:
-1. Create a JSON file named `news.json` with the desired news content.
-2. Upload the `news.json` file to a web server or any file hosting service.
-3. Obtain the URL of the hosted `news.json` file.
-4. Update the `"news_json_path"` in the `config.json` file with the obtained URL.
-
-## Customization
-
-You can customize the launcher appearance, background image, and other settings by editing the `config.json` file.
+1. Install the required dependencies by running `pip install -r requirements.txt`.
+2. Run the application by executing `python main.py`.
+3. Upon launch, the app will display the background image along with news updates fetched from a remote server.
+4. Click the "Update" button to download and update the client application.
+5. Once updated, click the "Launch" button to start the client application.
+6. News updates are displayed in the text box, where users can click on links to visit relevant web pages.
 
 ## Dependencies
 
@@ -55,11 +29,21 @@ You can customize the launcher appearance, background image, and other settings 
 ## Notes
 
 - Ensure an active internet connection to fetch the background image and news updates.
-- The game launcher executable must be hosted at a specific URL for the update functionality to work properly.
-- Adjust the URLs in the `config.json` file to match your server configurations.
-- 
-## How distribute as exe
+- The client application must be hosted at a specific URL for the update functionality to work properly.
+- Adjust the URLs in the code to match your server configurations.
+
+
+
+
+![EOServLauncher](https://github.com/HelloByeLetsNot/EOServLauncher/blob/main/Updatedbyttons.png)
+
+
+
+## How to edit and distribute as exe
 To create an executable (exe) file from your Python script, you can use `pyinstaller`. Here's a step-by-step guide on how to do it:
+
+
+
 
 ### 1. Install `pyinstaller`
 
@@ -78,7 +62,16 @@ pyinstaller --onefile main.py
 ```
 
 This command will create a `dist` directory containing the executable file (`main.exe`) along with any necessary files.
-directory to their desired name.
+
+### 3. Customize the Background Image, Download Link, and Exe Name
+
+To customize these elements, users can edit the following lines in the Python script (`main.py`):
+
+1. **Background Image**: Replace the URL in the `load_background` method with the desired background image URL.
+
+2. **Download Link**: Edit the URL in the `download_and_update` method to point to the desired download link for the client application.
+
+3. **Exe Name**: After creating the executable, users can rename it by simply renaming the generated `main.exe` file in the `dist` directory to their desired name.
 
 ### Additional Notes
 
@@ -87,5 +80,3 @@ directory to their desired name.
 - Users may need to adjust the file paths or additional configurations based on their specific requirements.
 
 With these steps, users can easily turn your Python script into an executable file and customize it to their liking.
-
-![EOServLauncher](https://github.com/HelloByeLetsNot/EOServLauncher/blob/main/eolauncher.png)
