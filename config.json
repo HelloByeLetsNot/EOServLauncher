@@ -1,0 +1,9 @@
+{
+  "background_image_url": "https://example.com/background.jpg",
+  "download_url": "https://example.com/game_update.zip",
+  "news_json_path": "news.json",
+  "launcher_exe_name": "Restart.exe",
+  "discord_link": "https://discord.gg/example",
+  "website_link": "https://www.example.com",
+  "icon_path": "icon.ico"
+}
