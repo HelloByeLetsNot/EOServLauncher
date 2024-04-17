@@ -98,8 +98,14 @@ class UpdateButton(RoundButton):
         except Exception as e:
             print("Error updating game:", e)
 
-with open("config.json", "r") as config_file:
-    config = json.load(config_file)
+# Fetch config from URL
+config_url = "https://raw.githubusercontent.com/HelloByeLetsNot/EOServLauncher/main/config.json"
+try:
+    response = requests.get(config_url)
+    config = response.json()
+except Exception as e:
+    print("Error fetching config:", e)
+    config = {}  # Set default config if fetching fails
 
 INITIAL_WINDOW_HEIGHT = 600
 
