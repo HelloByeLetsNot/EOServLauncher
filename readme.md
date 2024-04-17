@@ -35,7 +35,7 @@ The EoServ Client Launcher is a Client Updater and Luancher with a news feature.
 
 
 
-![EOServLauncher](https://github.com/HelloByeLetsNot/EOServLauncher/blob/main/Updatedbyttons.png)
+![EOServLauncher](https://github.com/HelloByeLetsNot/EOServLauncher/blob/main/Updatedbuttons.png)
 
 
 
