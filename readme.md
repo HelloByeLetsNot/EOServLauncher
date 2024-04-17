@@ -31,6 +31,7 @@ The EoServ Client Launcher is a Client Updater and Luancher with a news feature.
 - Ensure an active internet connection to fetch the background image and news updates.
 - The client application must be hosted at a specific URL for the update functionality to work properly.
 - Adjust the URLs in the code to match your server configurations.
+- Change the config.json url to your config.json. 
 
 
 
