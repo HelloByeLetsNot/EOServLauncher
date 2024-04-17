@@ -1,10 +1,14 @@
-{
-  "background_image_url": "https://cdn.discordapp.com/attachments/1058522584192397394/1066115319187386559/image.png?ex=662c2443&is=6619af43&hm=9d19574e4301882c3825840b6619c1bc2498064a7e446fbab461e19a58cf3399&",
-  "download_url": "http://endless-online-restart.com/downloads/EORClient.zip",
-  "news_json_url": "https://raw.githubusercontent.com/HelloByeLetsNot/EOServLauncher/main/news.json",
-  "launcher_exe_name": "Endless.exe",
-  "discord_link": "https://discord.gg/example",
-  "website_link": "https://www.example.com",
-  "icon_path": "icon.ico",
-  "update_zip_name": "EORClient.zip"
-}
+[
+  {
+    "title": "Patch Notes - Version 1.1",
+    "content": "We're excited to announce the release of our latest patch, version 1.1! This update includes bug fixes, performance improvements, and new features. Check out the full patch notes on our website."
+  },
+  {
+    "title": "Server Maintenance",
+    "content": "We will be performing scheduled maintenance on our servers tomorrow at 10:00 AM UTC. The maintenance is expected to last approximately 2 hours. We apologize for any inconvenience."
+  },
+  {
+    "title": "Upcoming Event",
+    "content": "Don't miss our special in-game event this weekend! Join us for fun activities, exclusive rewards, and more. Stay tuned for further details!"
+  }
+]
