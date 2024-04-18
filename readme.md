@@ -1,7 +1,8 @@
 # Game Launcher
 
 Welcome to the Game Launcher repository! This launcher is a Python application designed to facilitate easy access to game updates, news, and donation options for players.
-Before turning the main.py into a exe remember to change the config.json link in the code. 
+Before turning the main.py into a exe remember to change the config.json link in the code. Currently the program will load from a local copy of config.json stored in the same folder as the launcher.
+You can change this by following the directions below. 
 
 
 ## Features
@@ -15,18 +16,18 @@ Before turning the main.py into a exe remember to change the config.json link in
 
 To get started with the Game Launcher, follow these steps:
 
-## Chaning to remote config
+## Changing to remote config
 
 To make the config.json remote, you need to fetch it from a URL instead of loading it from a local file. Here's how you can modify your code to achieve this:
 
 Remove the block where you load the config from the JSON file:
 
-~~~with open('config.json') as f:
-    config = json.load(f)~~~
+with open('config.json') as f:
+    config = json.load(f)
 
 Replace the function with: 
 
-~~~def fetch_config(url):
+def fetch_config(url):
     try:
         response = requests.get(url)
         if response.status_code == 200:
@@ -36,7 +37,7 @@ Replace the function with:
             return None
     except Exception as e:
         print("Error fetching config:", e)
-        return None~~~
+        return None
 
 
 
