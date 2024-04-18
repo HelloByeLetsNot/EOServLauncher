@@ -3,12 +3,16 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 import requests
 import io
+import subprocess
+import os
 import zipfile
 import threading
 import webbrowser
-import subprocess
-import os
 import json
+
+# Load the config from the JSON file
+with open('config.json') as f:
+    config = json.load(f)
 
 class RoundButton(tk.Canvas):
     def __init__(self, master=None, **kw):
@@ -50,21 +54,24 @@ class DonationButton(RoundButton):
         self.create_text(self.width / 2, self.height / 2, text=self.text, font=("Arial", 10), fill="white")
 
     def invoke(self):
-        webbrowser.open(self.url)
+        webbrowser.open(config["donate_link"])
 
 class UpdateButton(RoundButton):
     def __init__(self, master=None, **kw):
         super().__init__(master, **kw)
         self.text = "Update Game"
         self.draw_text()
-        self.update_url = ""
-        self.executable_name = ""
 
     def draw_text(self):
         self.create_text(self.width / 2, self.height / 2, text=self.text, font=("Arial", 10), fill="white")
 
     def invoke(self):
         threading.Thread(target=self.update_game).start()
+
+    def update_status(self, status):
+        self.delete("status_text")
+        self.create_text(self.width / 2, self.height / 2 - 10, text=status, font=("Arial", 8), fill="white",
+                         tag="status_text")
 
     def update_game(self):
         try:
@@ -80,10 +87,10 @@ class UpdateButton(RoundButton):
                 self.update_status("Update complete!")
                 self.update_local_version(remote_version)
                 messagebox.showinfo("Update Complete", "Game updated successfully.")
-                subprocess.Popen([self.executable_name])
+                subprocess.Popen([config["update"]["executable"]])
             else:
                 self.update_status("No updates available.")
-                subprocess.Popen([self.executable_name])
+                subprocess.Popen([config["update"]["executable"]])
 
         except Exception as e:
             self.update_status(f"Error updating game: {e}")
@@ -111,7 +118,7 @@ class UpdateButton(RoundButton):
 
     def get_remote_version(self):
         try:
-            response = requests.get(self.update_url)
+            response = requests.get(config["update_link"])
             return response.text.strip()
         except Exception as e:
             print("Error getting remote version:", e)
@@ -119,7 +126,7 @@ class UpdateButton(RoundButton):
 
     def download_update(self):
         try:
-            with requests.get(self.update_url, stream=True) as response:
+            with requests.get(config["update_zip_link"], stream=True) as response:
                 response.raise_for_status()
                 total_size = int(response.headers.get('content-length', 0))
                 bytes_written = 0
@@ -134,7 +141,7 @@ class UpdateButton(RoundButton):
 
             with zipfile.ZipFile("EORClient.zip", "r") as zip_ref:
                 for file in zip_ref.namelist():
-                    if file != self.executable_name and not os.path.exists(
+                    if file != config["update"]["executable"] and not os.path.exists(
                             os.path.join(os.path.dirname(os.path.abspath(__file__)), file)):
                         zip_ref.extract(file, os.path.dirname(os.path.abspath(__file__)))
 
@@ -153,74 +160,118 @@ class UpdateButton(RoundButton):
 
     def download_new_client(self):
         try:
-            with requests.get(self.update_url, stream=True) as response:
+            with requests.get(config["new_client_zip_link"], stream=True) as response:
                 response.raise_for_status()
-
-                with open(self.executable_name, "wb") as f:
+                total_size = int(response.headers.get('content-length', 0))
+                bytes_written = 0
+                with open("EORClient.zip", "wb") as f:
                     for chunk in response.iter_content(chunk_size=8192):
                         if chunk:
                             f.write(chunk)
+                            bytes_written += len(chunk)
+                            progress = min(int((bytes_written / total_size) * 100), 100)
+                            print(f"Downloading... {progress}%")
+                            self.update_status(f"Downloading.. {progress}%")
+                            self.update()
+
+            with zipfile.ZipFile("EORClient.zip", "r") as zip_ref:
+                for file in zip_ref.namelist():
+                    if file != config["update"]["executable"] and not os.path.exists(
+                            os.path.join(os.path.dirname(os.path.abspath(__file__)), file)):
+                        zip_ref.extract(file, os.path.dirname(os.path.abspath(__file__)))
+
+            os.remove("EORClient.zip")
 
         except Exception as e:
-            print("Error downloading new client:", e)
+            print("Error downloading or extracting new client:", e)
 
-class Launcher(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Game Launcher")
-        self.geometry("800x600")
-        self.minsize(800, 600)
-        self.maxsize(800, 600)
-        self.load_config()
-        self.load_background()
-        self.load_news()
-        self.create_buttons()
+INITIAL_WINDOW_HEIGHT = 600
 
-    def load_config(self):
-        try:
-            with open("config.json", "r") as config_file:
-                self.config_data = json.load(config_file)
-        except FileNotFoundError:
-            print("Config file not found.")
-            messagebox.showerror("Error", "Config file not found.")
-            self.destroy()
+root = tk.Tk()
+root.title("Game Launcher")
+root.geometry(f"800x{INITIAL_WINDOW_HEIGHT}")
+root.minsize(800, INITIAL_WINDOW_HEIGHT)
+root.maxsize(800, INITIAL_WINDOW_HEIGHT)
 
-    def load_background(self):
-        try:
-            background_url = self.config_data["background"]
-            response = requests.get(background_url)
-            image_data = response.content
-            self.background_image = ImageTk.PhotoImage(Image.open(io.BytesIO(image_data)))
-            self.background_label = tk.Label(self, image=self.background_image)
-            self.background_label.place(x=0, y=0, relwidth=1, relheight=1)
-            self.background_label.image = self.background_image
-        except Exception as e:
-            print("Error loading background image:", e)
-            messagebox.showerror("Error", "Failed to load background image.")
+# Set the background image
+try:
+    background_response = requests.get(config["background_link"])
+    background_image = Image.open(io.BytesIO(background_response.content))
+    background_image = background_image.resize((800, INITIAL_WINDOW_HEIGHT), Image.LANCZOS)
+    background_photo = ImageTk.PhotoImage(background_image)
+    background_label = tk.Label(root, image=background_photo)
+    background_label.place(x=0, y=0, relwidth=1, relheight=1)
+    background_label.image = background_photo  # prevent garbage collection
+except Exception as e:
+    print("Error loading background image:", e)
+    root.config(bg="white")
 
-    def load_news(self):
-        try:
-            news_url = self.config_data["news"]
-            response = requests.get(news_url)
-            news_text = response.text
-            self.news_text = tk.Text(self, wrap="word", font=("Arial", 12), padx=10, pady=10)
-            self.news_text.insert(tk.END, news_text)
-            self.news_text.config(state="disabled")
-            self.news_text.place(relx=0.5, rely=0.1, anchor="center", relwidth=0.8, relheight=0.6)
-        except Exception as e:
-            print("Error loading news:", e)
-            messagebox.showerror("Error", "Failed to load news.")
+# Load and display news data
+news_frame = tk.Frame(root)
+news_frame.place(relx=0.5, rely=0.7, anchor=tk.CENTER)
 
-    def create_buttons(self):
-        donate_button = DonationButton(self, width=120, height=40)
-        donate_button.place(relx=0.2, rely=0.85, anchor="center")
-        donate_button.url = self.config_data.get("donate", "")
+news_text = tk.Text(news_frame, width=50, height=10)
+news_text.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        update_button = UpdateButton(self, width=120, height=40)
-        update_button.place(relx=0.8, rely=0.85, anchor="center")
-        update_button.update_url = self.config_data.get("update", {}).get("url", "")
-        update_button.executable_name = self.config_data.get("update", {}).get("executable", "")
+scrollbar = tk.Scrollbar(news_frame, command=news_text.yview)
+scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-if __name__ == "__main__":
-    app = Launcher()
-    app.mainloop()
+news_text.config(yscrollcommand=scrollbar.set, state=tk.DISABLED)
+
+try:
+    response = requests.get(config["news_link"])
+    news = response.json()
+    print("News data:", news)
+except Exception as e:
+    print("Error loading news:", e)
+
+if news:
+    news_text.config(state=tk.NORMAL)
+    news_text.delete(1.0, tk.END)
+    for item in news:
+        news_text.insert(tk.END, f"{item['title']}:\n", "title")
+        news_text.insert(tk.END, f"{item['content']}\n\n", "content")
+    news_text.config(state=tk.DISABLED)
+
+    news_text.tag_config("title", font=("Helvetica", 12, "bold"), foreground="blue")
+    news_text.tag_config("content", font=("Helvetica", 10), foreground="black")
+
+    num_lines = sum(1 for _ in news_text.get("1.0", "end").split("\n"))
+    window_height = num_lines * 20
+    root.geometry(f"800x{window_height}")
+
+# Button frame
+link_frame = tk.Canvas(root, bg="#FFA07A", highlightthickness=0, height=50, width=800)
+link_frame.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
+
+# Function to open website link
+def open_website(event):
+    webbrowser.open(config["website_link"])
+
+# Function to open Discord link
+def open_discord(event):
+    webbrowser.open(config["discord_link"])
+
+# Website button
+website_button = RoundButton(link_frame, width=80, height=30)
+website_button.create_text(website_button.width / 2, website_button.height / 2, text="Website", font=("Arial", 10),
+                           fill="white")
+website_button.place(relx=0.15, rely=0.5, anchor=tk.CENTER)
+website_button.bind("<Button-1>", open_website)
+
+# Discord button
+discord_button = RoundButton(link_frame, width=80, height=30)
+discord_button.create_text(discord_button.width / 2, discord_button.height / 2, text="Discord", font=("Arial", 10),
+                           fill="white")
+discord_button.place(relx=0.85, rely=0.5, anchor=tk.CENTER)
+discord_button.bind("<Button-1>", open_discord)
+
+# Donation button
+donate_button = DonationButton(link_frame, width=120, height=40)
+donate_button.place(relx=0.35, rely=0.5, anchor=tk.CENTER)
+
+# Update button
+update_button = UpdateButton(link_frame, width=120, height=40)
+update_button.place(relx=0.65, rely=0.5, anchor=tk.CENTER)
+
+root.mainloop()
