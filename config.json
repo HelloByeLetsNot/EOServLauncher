@@ -1,9 +1,12 @@
 {
-  "background": "https://images.nightcafe.studio/jobs/ljkj6vRw5xX92GUVCGba/ljkj6vRw5xX92GUVCGba--1--q71zf.jpg?tr=w-1600,c-at_max",
-  "icon": "https://images.nightcafe.studio/jobs/POrkB5oWAGzj2gG9590U/POrkB5oWAGzj2gG9590U--1--tzga3.jpg?tr=w-1080,c-at_max",
-  "news": "https://example.com/news.json",
-  "update": "https://example.com/update.json",
+  "background": "https://images.nightcafe.studio/jobs/ljkj6vRw5xX92GUVCGba/ljkj6vRw5xX92GUVCGba--1--q71zf.jpg?tr=w-640,c-at_max",
+  "icon": "https://images.nightcafe.studio/jobs/ljkj6vRw5xX92GUVCGba/ljkj6vRw5xX92GUVCGba--1--q71zf.jpg?tr=w-640,c-at_max",
+  "news": "https://raw.githubusercontent.com/HelloByeLetsNot/EOServLauncher/main/news.json",
+  "update": {
+    "url": "https://example.com/update.zip",
+    "executable": "EORClient.exe"
+  },
   "website": "https://kozaworld.com",
-  "donate": "https://kozaworld.com",
+  "donate": "https://example.com/donate",
   "discord": "https://example.com/discord"
 }
