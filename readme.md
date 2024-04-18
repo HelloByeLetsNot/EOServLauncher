@@ -19,12 +19,12 @@ To get started with the Game Launcher, follow these steps:
 
 To make the config.json remote, you need to fetch it from a URL instead of loading it from a local file. Here's how you can modify your code to achieve this:
 
-**Remove the block where you load the config from the JSON file:
-**
+Remove the block where you load the config from the JSON file:
+
 ```with open('config.json') as f:
     config = json.load(f)```
 
-**Replace the function with:**
+Replace the function with: 
 
 ```def fetch_config(url):
     try:
@@ -67,11 +67,11 @@ The Game Launcher application can be converted into an executable using auto-py-
 Install auto-py-to-exe:
 
 
-```pip install auto-py-to-exe```
+pip install auto-py-to-exe
 
 Open auto-py-to-exe by running the following command in your terminal:
 
-```auto-py-to-exe```
+auto-py-to-exe
 
 In the auto-py-to-exe window, follow these steps:
 
