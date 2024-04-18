@@ -1,83 +1,52 @@
-# EoServ Client Launcher
+# Game Launcher
 
-The EoServ Client Launcher is a Client Updater and Luancher with a news feature. It is a simple GUI application built with Tkinter in Python. It allows users to update and launch a client application, while also providing news updates fetched from a remote server.
+Welcome to the Game Launcher repository! This launcher is a Python application designed to facilitate easy access to game updates, news, and donation options for players.
 
 ## Features
 
-- Background Image: The app displays a background image fetched from a URL.
-- Update Button: Clicking this button triggers the download and update process for the client application.
-- Launch Button: Clicking this button launches the client application if it exists.
-- Progress Bar: Shows the progress of the download and update process.
-- News Display: The app fetches news data from a remote server and displays it in a text box. Users can click on links within the text to visit corresponding web pages.
+- **Update Game:** Check for and download game updates effortlessly.
+- **News Feed:** Stay up-to-date with the latest news and announcements.
+- **Donation Button:** Support the development of the game through donations.
+- **Customizable Configuration:** Edit URLs and other settings via a `config.json` file.
 
-## Usage
+## Getting Started
 
-1. Install the required dependencies by running `pip install -r requirements.txt`.
-2. Run the application by executing `python main.py`.
-3. Upon launch, the app will display the background image along with news updates fetched from a remote server.
-4. Click the "Update" button to download and update the client application.
-5. Once updated, click the "Launch" button to start the client application.
-6. News updates are displayed in the text box, where users can click on links to visit relevant web pages.
+To get started with the Game Launcher, follow these steps:
 
-## Dependencies
+## Editing the Configuration
+The Game Launcher application uses a config.json file to store configuration parameters such as URLs for background images, news data, donation links, and update information. Follow the steps below to edit the configuration:
 
-- Python 3.x
-- tkinter
-- Pillow
-- aiohttp
+Open the config.json file located in the same directory as the launcher.py script.
 
-## Notes
+Modify the values of the following keys according to your requirements:
+"background": URL of the background image.
+"news": URL of the JSON file containing news data.
+"donate": URL of the donation link.
+"update": Object containing update information:
+"url": URL of the update file (zip archive).
+"executable": Name of the executable file to be launched after updating.
+Save the config.json file after making changes.
+Creating an Executable with auto-py-to-exe
+The Game Launcher application can be converted into an executable using auto-py-to-exe, a graphical user interface-based application that converts Python scripts into Windows executables.
 
-- Ensure an active internet connection to fetch the background image and news updates.
-- The client application must be hosted at a specific URL for the update functionality to work properly.
-- Adjust the URLs in the code to match your server configurations.
-- Change the config.json url to your config.json. 
+## Follow the steps below to create an executable using auto-py-to-exe:
 
-
+Install auto-py-to-exe:
 
 
-![EOServLauncher](https://github.com/HelloByeLetsNot/EOServLauncher/blob/main/Updatedbuttons.png)
+pip install auto-py-to-exe
 
+Open auto-py-to-exe by running the following command in your terminal:
 
+auto-py-to-exe
 
-## How to edit and distribute as exe
-To create an executable (exe) file from your Python script, you can use `pyinstaller`. Here's a step-by-step guide on how to do it:
+In the auto-py-to-exe window, follow these steps:
 
+Click on the "Browse" button and select the launcher.py script.
+Configure the settings such as the output directory and other options according to your preferences.
+Click on the "Convert .py to .exe" button to start the conversion process.
+Once the process is complete, the executable file will be generated in the specified output directory.
+You can now distribute the generated executable file to users who can run the Game Launcher application without needing Python installed.
+Running the Game Launcher
+After creating the executable, users can simply double-click on the generated executable file to run the Game Launcher application. The launcher will load the configuration from the config.json file and display the launcher interface with the specified background image, news data, and buttons for donation and updating the game.
 
-
-
-### 1. Install `pyinstaller`
-
-If you haven't already installed `pyinstaller`, you can do so using pip:
-
-```
-pip install pyinstaller
-```
-
-### 2. Create the Executable
-
-Navigate to the directory containing your Python script (`main.py`) and run the following command:
-
-```
-pyinstaller --onefile main.py
-```
-
-This command will create a `dist` directory containing the executable file (`main.exe`) along with any necessary files.
-
-### 3. Customize the Background Image, Download Link, and Exe Name
-
-To customize these elements, users can edit the following lines in the Python script (`main.py`):
-
-1. **Background Image**: Replace the URL in the `load_background` method with the desired background image URL.
-
-2. **Download Link**: Edit the URL in the `download_and_update` method to point to the desired download link for the client application.
-
-3. **Exe Name**: After creating the executable, users can rename it by simply renaming the generated `main.exe` file in the `dist` directory to their desired name.
-
-### Additional Notes
-
-- Make sure to include any necessary image files or assets alongside the executable if they are referenced in the script.
-
-- Users may need to adjust the file paths or additional configurations based on their specific requirements.
-
-With these steps, users can easily turn your Python script into an executable file and customize it to their liking.
