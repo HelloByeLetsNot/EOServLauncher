@@ -1,6 +1,8 @@
 # Game Launcher
 
 Welcome to the Game Launcher repository! This launcher is a Python application designed to facilitate easy access to game updates, news, and donation options for players.
+Before turning the main.py into a exe remember to change the config.json link in the code. 
+
 
 ## Features
 
@@ -13,6 +15,37 @@ Welcome to the Game Launcher repository! This launcher is a Python application d
 
 To get started with the Game Launcher, follow these steps:
 
+## Chaning to remote config
+
+To make the config.json remote, you need to fetch it from a URL instead of loading it from a local file. Here's how you can modify your code to achieve this:
+
+**Remove the block where you load the config from the JSON file:
+**
+```with open('config.json') as f:
+    config = json.load(f)```
+
+**Replace the function with:**
+
+```def fetch_config(url):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print("Failed to fetch config:", response.status_code)
+            return None
+    except Exception as e:
+        print("Error fetching config:", e)
+        return None```
+
+
+
+# Replace 'config.json' with the URL where your config file is hosted
+config_url = 'https://example.com/config.json'
+config = fetch_config(config_url)
+Make sure to replace 'https://example.com/config.json' with the actual URL where your config.json file is hosted.
+
+With these changes, your application will fetch the config.json file from the specified URL instead of loading it from a local file.
 ## Editing the Configuration
 The Game Launcher application uses a config.json file to store configuration parameters such as URLs for background images, news data, donation links, and update information. Follow the steps below to edit the configuration:
 
@@ -34,11 +67,11 @@ The Game Launcher application can be converted into an executable using auto-py-
 Install auto-py-to-exe:
 
 
-pip install auto-py-to-exe
+```pip install auto-py-to-exe```
 
 Open auto-py-to-exe by running the following command in your terminal:
 
-auto-py-to-exe
+```auto-py-to-exe```
 
 In the auto-py-to-exe window, follow these steps:
 
