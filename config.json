@@ -1,12 +1,11 @@
 {
-  "background": "https://images.nightcafe.studio/jobs/ljkj6vRw5xX92GUVCGba/ljkj6vRw5xX92GUVCGba--1--q71zf.jpg?tr=w-640,c-at_max",
-  "icon": "https://images.nightcafe.studio/jobs/ljkj6vRw5xX92GUVCGba/ljkj6vRw5xX92GUVCGba--1--q71zf.jpg?tr=w-640,c-at_max",
-  "news": "https://raw.githubusercontent.com/HelloByeLetsNot/EOServLauncher/main/news.json",
-  "update": {
-    "url": "https://example.com/update.zip",
-    "executable": "EORClient.exe"
-  },
-  "website": "https://kozaworld.com",
-  "donate": "https://example.com/donate",
-  "discord": "https://example.com/discord"
+    "background_link": "https://images.nightcafe.studio/jobs/ljkj6vRw5xX92GUVCGba/ljkj6vRw5xX92GUVCGba--1--q71zf.jpg",
+    "icon_link": "https://images.nightcafe.studio/jobs/ljkj6vRw5xX92GUVCGba/ljkj6vRw5xX92GUVCGba--1--q71zf.jpg",
+    "news_link": "https://raw.githubusercontent.com/HelloByeLetsNot/EOServLauncher/main/news.json",
+    "update_link": "URL_TO_CHECK_FOR_UPDATES",
+    "update_zip_link": "URL_TO_DOWNLOAD_UPDATE_ZIP",
+    "new_client_zip_link": "URL_TO_DOWNLOAD_NEW_CLIENT_ZIP",
+    "website_link": "https://kozaworld.com",
+    "donate_link": "URL_TO_DONATION_PAGE",
+    "discord_link": "URL_TO_DISCORD_SERVER"
 }
